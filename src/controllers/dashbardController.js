@@ -6,7 +6,7 @@ export const getDashboardStats = async (req, res) => {
   const startOfDay = new Date(today.setHours(0, 0, 0, 0));
   const endOfDay = new Date(today.setHours(23, 59, 59, 999));
   try {
-    const [countStats, totalUsers] = await Promise.all([
+    const [countStats, topEventsByParticipants] = await Promise.all([
       Event.aggregate([
         {
           $facet: {
@@ -25,7 +25,18 @@ export const getDashboardStats = async (req, res) => {
           },
         },
       ]),
-      User.countDocuments(),
+      Event.aggregate([
+        { $match: { nbParticipants: { $exists: true, $ne: null, $gt: 0 } } },
+        { $sort: { nbParticipants: -1 } },
+        { $limit: 5 },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            nbParticipants: 1,
+          },
+        },
+      ]),
     ]);
 
     const stats = countStats[0];
@@ -37,7 +48,7 @@ export const getDashboardStats = async (req, res) => {
       eventsToday,
       eventsByLocation: stats.eventsByLocation,
       eventsByStatus: stats.eventsByStatus,
-      totalUsers,
+      topEventsByParticipants,
     });
   } catch (err) {
     console.error(err);
