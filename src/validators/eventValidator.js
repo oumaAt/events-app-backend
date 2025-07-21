@@ -12,7 +12,12 @@ export const createEventSchema = z.object({
     ),
   location: z.string().min(2, "Le lieu doit comporter au moins 2 caractères"),
   category: z.enum(["conference", "workshop", "concert"]).optional(),
-  nbParticipants: z.number().int().positive(),
+  nbParticipants: z
+    .string()
+    .transform((val) => Number(val))
+    .refine((val) => !isNaN(val), {
+      message: "Le nombre de participants doit être un nombre valide",
+    }),
   isPublic: z.boolean().optional(),
   status: z.enum(["scheduled", "ongoing", "cancelled", "done"]).optional(),
 });
