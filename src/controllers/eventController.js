@@ -3,13 +3,14 @@ import { create, deleteOne, findAll } from "../services/eventService.js";
 export const getAllEvents = async (req, res) => {
   try {
     const { page, limit } = req.query;
-    const { sort, title, location, date, status } = req.body;
+    const { sort, title, location, date, status, category } = req.body;
 
     const filter = {};
     if (title) filter.title = { $regex: title, $options: "i" };
     if (location) filter.location = { $regex: location, $options: "i" };
     if (date) filter.date = { $gte: new Date(date) };
     if (status) filter.status = status;
+    if (category) filter.category = category;
 
     const events = await findAll(filter, {
       page: parseInt(page) || 1,
