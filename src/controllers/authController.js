@@ -9,7 +9,9 @@ export const register = async (req, res) => {
     if (user) {
       return res.status(400).json({ message: "User already exists." });
     }
-    user = await createUser(req.body);
+    const photo = req.file ? `/uploads/${req.file.filename}` : null;
+
+    user = await createUser({ ...req.body, photo });
     const token = generateToken(user._id);
 
     res.status(201).json({ user, token });
