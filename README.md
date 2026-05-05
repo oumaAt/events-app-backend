@@ -1,54 +1,67 @@
-########################### Fonctionnalités ##############################################################################
-* Authentification :
-   - Inscription avec génération de JWT
-   - Connexion avec mot de passe sécurisé (bcrypt)
-   - Middleware de protection des routes avec token
+# Event Manager — Backend
 
-* Gestion des événements :
-  - Création, liste et suppression d’événements
-  - Filtres par titre, localisation, date et statut
-  - Téléchargement d’image via Multer
+A REST API for managing events with authentication, image upload, filtering and dashboard statistics.
 
-* Dashboard :
-  - Statistiques par statut, par localisation et événements du jour
+📄 **Swagger UI:** http://localhost:3000/api-docs
 
-* Validation :
-  - Validation des données avec Zod
+## Features
 
-* Documentation :
-  - Documentation des APIs avec Swagger UI
+- **Authentication** — register and login with bcrypt password hashing and JWT generation, route protection middleware
+- **Event management** — create, list and delete events with filters by title, location, date and status
+- **Image upload** — handled via Multer
+- **Dashboard** — statistics by status, by location and events scheduled for today
+- **Validation** — schema-based validation with Zod
+- **Tests** — unit and integration tests with Jest and Supertest
+- **Documentation** — full API docs via Swagger UI (OpenAPI 3.0)
 
-* Tests :
-  - Tests unitaires avec Jest et Supertest
+## Tech Stack
 
-################## Technologies ###################################################################################################"""
-Backend : Node.js, Express
-Base de données : MongoDB & Mongoose
-Validation : Zod
-Authentification : JWT
-Tests : Jest, Supertest
-Documentation : Swagger (OpenAPI 3.0)
+- **Node.js + Express**
+- **MongoDB + Mongoose**
+- **Zod** — request validation
+- **JWT + bcrypt** — authentication
+- **Multer** — file uploads
+- **Jest + Supertest** — testing
+- **Swagger (OpenAPI 3.0)** — API documentation
 
-################### Installation et Lancement #####################################################################################
+## Getting Started
+
+```bash
 git clone https://github.com/oumaAt/events-app-backend.git
 cd events-app-backend
 npm install
+```
 
-- Créer un fichier .env :
+### Environment Variables
 
+Copy `.env.example` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+```env
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/events_db
-JWT_SECRET=supersecret
+JWT_SECRET=your_jwt_secret
+```
 
-Lancer l’application: 
+### Run the app
+
+```bash
 npm start
+```
 
+### Run tests
 
-##################### API Documentation ###############################################################################
-La documentation complète de l'API est disponible via Swagger. Vous pouvez y accéder en utilisant l'URL suivante : http://localhost:3000/api-docs
-
-####################### Tests #####################################################################################
-Les tests sont réalisés avec Jest + Supertest.
-
-Lancer les Tests:
+```bash
 npm run test
+```
+
+## API Documentation
+
+Swagger UI is available at:
+
+```
+http://localhost:3000/api-docs
+```
